@@ -1,0 +1,79 @@
+*a function that returns the sum of two numbers
+
+INFORMAL
+Given two numbers.
+
+Add the first number to the second number.
+
+Return the sum.
+
+FORMAL 
+
+START
+
+# Given two numbers called "number1" and "number2"
+SET sum = number1 + number 2
+
+PRINT sum
+
+END
+
+*a function that takes an array of strings, and returns a string that is all those 
+strings concatenated together
+
+INFORMAL
+
+Given a collection of strings called "strings".
+
+Join all strings together
+
+Return the concatenated string.
+
+FORMAL
+
+START
+
+# Given a collection of strings called "strings".
+
+SET
+
+longString = strings.join('')
+
+PRINT longString
+
+END
+
+*a function that takes an array of integers, and returns a new array with every other 
+element
+
+INFORMAL
+
+Given a collection of integers. 
+
+Save a new collection.
+
+Iterate through the collection one by one.
+ - save the first value of the collection to the new collection.
+ - skip an element.
+ - save the third value of the collection to the new collection.
+ - skip an element of the collection.
+ - repeat until the collection has no more elements. 
+
+ After iterating through the collection, return the new collection.
+
+ FORMAL
+
+ START
+
+ # Given a collection of integers called "numbers"
+
+SET iterator = 0;
+SET newCollection = []
+
+WHILE iterator <= length of numbers
+  SET newCollection.push(numbers[iterator])
+  iterator = iterator + 2
+
+PRINT newCollection
+
+END
