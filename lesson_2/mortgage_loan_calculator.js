@@ -20,7 +20,7 @@ while (true) {
     prompt(MESSAGES['invalidNumber']);
     loanAmount = readline.question();
   }
-  
+
   prompt(MESSAGES['lengthOfLoan']);
   let lengthOfLoaninYears = readline.question();
 
@@ -40,7 +40,8 @@ while (true) {
 
   let monthlyInterestRate = (Number(annualInterestRate) / 100 ) / 12;
 
-  let monthlyPayment = Number(loanAmount) * (monthlyInterestRate / (1 - Math.pow((1 + monthlyInterestRate),(-lengthOfLoaninMonths))));
+  let monthlyPayment = Number(loanAmount) * (monthlyInterestRate /
+  (1 - Math.pow((1 + monthlyInterestRate),(-lengthOfLoaninMonths))));
 
   monthlyPayment = monthlyPayment.toFixed(2);
   prompt(`${MESSAGES['result']}${monthlyPayment}`);
