@@ -2,8 +2,9 @@
   "welcome": "Welcome to Mortgage/Car Loan Calculator!",
   "loanAmount": "Enter the loan amount without commas (ex: 100000).",
   "invalidNumber": "Hmm... that doesn't look like a valid number. Must enter a positive number.",
-  "lengthOfLoan": "Enter the loan term in years.",
+  "lengthOfLoan": "Enter the loan term in years. Must enter a positive integer.",
   "interestRate": "Enter the interest rate (ex: 4.5 for 4.5% or 10 for 10%).",
   "result": "Your monthly payment is: $",
-  "anotherCalculation" : "Would you like to perform another calculation? Enter yes or no."
+  "anotherCalculation" : "Would you like to perform another calculation? Enter yes or no.",
+  "validateAnotherCalculation": "Only enter yes or no."
 }
