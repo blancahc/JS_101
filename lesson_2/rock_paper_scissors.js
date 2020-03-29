@@ -1,12 +1,8 @@
 const readline = require('readline-sync');
 const VALID_CHOICES = {rock: 'r', paper: 'p', scissors: 's', spock: 'sp', lizard: 'l'};
 
-let playerScore;
-playerScore = playerScore || 0;
-let computerScore;
-computerScore = computerScore || 0;
-let ties;
-ties = ties || 0;
+let playerScore = 0;
+let computerScore = 0;
 
 function prompt(message) {
   console.log(`=> ${message}`);
@@ -19,6 +15,7 @@ function displayChoices() {
   }
   return text;
 }
+
 function shortToLongChoice(choice) {
   let longChoice = '';
   for (const property in VALID_CHOICES) {
@@ -43,11 +40,11 @@ function playerWins (playerChoice, computerChoice) {
 }
 
 let choicesText = displayChoices();
+
 let choicesArray = Object.values(VALID_CHOICES);
 
 function displayWinner(playerChoice, computerChoice) {
   prompt(`You chose ${playerChoice}, computer chose ${computerChoice}`);
-
   let playerWon = playerWins(playerChoice, computerChoice);
   if (playerWon) {
     prompt('You win!');
@@ -58,50 +55,55 @@ function displayWinner(playerChoice, computerChoice) {
   }
 }
 
-
 function keepScore(playerChoice, computerChoice) {
   let playerWon = playerWins(playerChoice, computerChoice);
   if (playerWon) {
-    playerScore += 0 + 1;
+    playerScore += 1;
   } else if (playerChoice === computerChoice) {
-    ties += 0 + 1;
+    playerScore += 0;
   } else {
-    computerScore += 0 + 1;
+    computerScore += 1;
   }
 }
 
 while (true) {
-  prompt(`Let's see if you can beat the computer 5 won rounds.`);
-  prompt('Choose one:' + '\n' + choicesText);
-  let playerChoice = readline.question();
+  console.clear();
+  prompt(`Let's see who will get to 5 wins first!`);
 
-  while (!choicesArray.includes(playerChoice)) {
-    prompt("That's not a valid choice");
-    playerChoice = readline.question();
+  while (true) {
+    prompt('Choose one:' + '\n' + choicesText);
+    let playerChoice = readline.question();
+
+
+    while (!choicesArray.includes(playerChoice)) {
+      prompt("That's not a valid choice");
+      playerChoice = readline.question();
+    }
+    playerChoice = shortToLongChoice(playerChoice);
+
+    let randomIndex = Math.floor(Math.random() * choicesArray.length);
+    let computerChoice = choicesArray[randomIndex];
+    computerChoice = shortToLongChoice(computerChoice);
+
+    displayWinner(playerChoice, computerChoice);
+
+    keepScore(playerChoice, computerChoice);
+
+    console.clear();
+    prompt(`You have ${playerScore} wins, Computer has ${computerScore} wins.`);
+
+    if (computerScore === 5) {
+      prompt(`Game over, you already lost 5 rounds!`);
+      break;
+    }
+
+    if (playerScore === 5) {
+      prompt(`Congratulations, you won 5 rounds!`);
+      break;
+    }
+
   }
-  playerChoice = shortToLongChoice(playerChoice);
-
-  let randomIndex = Math.floor(Math.random() * choicesArray.length);
-  let computerChoice = choicesArray[randomIndex];
-  computerChoice = shortToLongChoice(computerChoice);
-
-  displayWinner(playerChoice, computerChoice);
-
-  keepScore(playerChoice, computerChoice);
-
-  prompt(`You have ${playerScore} wins, Computer has ${computerScore} wins, and there are ${ties} ties.`);
-
-  if (computerScore === 5) {
-    prompt(`Game over, you already lost 5 rounds!`);
-    break;
-  }
-
-  if (playerScore === 5) {
-    prompt(`Congratulations, you won 5 rounds!`);
-    break;
-  }
-
-  prompt('Do you want to play another round (y/n)?');
+  prompt('Do you want to play again (y/n)?');
   let answer = readline.question().toLowerCase();
   while (answer[0] !== 'n' && answer[0] !== 'y') {
     prompt('Please enter "y" or "n" .');
