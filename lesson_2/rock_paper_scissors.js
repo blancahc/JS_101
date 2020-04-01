@@ -1,8 +1,12 @@
 const readline = require('readline-sync');
 const VALID_CHOICES = {rock: 'r', paper: 'p', scissors: 's', spock: 'sp', lizard: 'l'};
-
-let playerScore = 0;
-let computerScore = 0;
+const WINNING_COMBOS = {
+  rock: ['scissors', 'lizard'],
+  paper: ['rock', 'spock'],
+  scissors: ['paper', 'lizard'],
+  lizard: ['paper', 'spock'],
+  spock: ['rock', 'scissors']
+};
 
 function prompt(message) {
   console.log(`=> ${message}`);
@@ -27,24 +31,17 @@ function shortToLongChoice(choice) {
 }
 
 function playerWins (playerChoice, computerChoice) {
-  return (playerChoice === 'rock' && computerChoice === 'scissors') ||
-         (playerChoice === 'rock' && computerChoice === 'lizard') ||
-         (playerChoice === 'paper' && computerChoice === 'rock') ||
-         (playerChoice === 'paper' && computerChoice === 'spock') ||
-         (playerChoice === 'scissors' && computerChoice === 'paper') ||
-         (playerChoice === 'spock' && computerChoice === 'lizard') ||
-         (playerChoice === 'lizard' && computerChoice === 'paper') ||
-         (playerChoice === 'lizard' && computerChoice === 'spock') ||
-         (playerChoice === 'spock' && computerChoice === 'rock') ||
-         (playerChoice === 'spock' && computerChoice === 'scissors');
+  return WINNING_COMBOS[playerChoice].includes(computerChoice);
 }
-
 let choicesText = displayChoices();
 
 let choicesArray = Object.values(VALID_CHOICES);
 
-function displayWinner(playerChoice, computerChoice) {
+function displayChoicesMade (playerChoice, computerChoice) {
+  console.clear();
   prompt(`You chose ${playerChoice}, computer chose ${computerChoice}`);
+}
+function displayWinner(playerChoice, computerChoice) {
   let playerWon = playerWins(playerChoice, computerChoice);
   if (playerWon) {
     prompt('You win!');
@@ -55,41 +52,42 @@ function displayWinner(playerChoice, computerChoice) {
   }
 }
 
-function keepScore(playerChoice, computerChoice) {
-  let playerWon = playerWins(playerChoice, computerChoice);
-  if (playerWon) {
-    playerScore += 1;
-  } else if (playerChoice === computerChoice) {
-    playerScore += 0;
-  } else {
-    computerScore += 1;
-  }
-}
-
 while (true) {
   console.clear();
   prompt(`Let's see who will get to 5 wins first!`);
-
+  let playerScore = 0;
+  let computerScore = 0;
   while (true) {
     prompt('Choose one:' + '\n' + choicesText);
     let playerChoice = readline.question();
-
+    playerChoice = playerChoice.toLowerCase();
 
     while (!choicesArray.includes(playerChoice)) {
+      console.clear();
       prompt("That's not a valid choice");
       playerChoice = readline.question();
+      playerChoice = playerChoice.toLowerCase();
     }
+
     playerChoice = shortToLongChoice(playerChoice);
 
     let randomIndex = Math.floor(Math.random() * choicesArray.length);
     let computerChoice = choicesArray[randomIndex];
     computerChoice = shortToLongChoice(computerChoice);
 
+    displayChoicesMade(playerChoice, computerChoice);
+
     displayWinner(playerChoice, computerChoice);
 
-    keepScore(playerChoice, computerChoice);
+    let playerWon = playerWins(playerChoice, computerChoice);
+    if (playerWon) {
+      playerScore += 1;
+    } else if (playerChoice === computerChoice) {
+      playerScore += 0;
+    } else {
+      computerScore += 1;
+    }
 
-    console.clear();
     prompt(`You have ${playerScore} wins, Computer has ${computerScore} wins.`);
 
     if (computerScore === 5) {
