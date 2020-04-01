@@ -33,6 +33,7 @@ function shortToLongChoice(choice) {
 function playerWins (playerChoice, computerChoice) {
   return WINNING_COMBOS[playerChoice].includes(computerChoice);
 }
+
 let choicesText = displayChoices();
 
 let choicesArray = Object.values(VALID_CHOICES);
@@ -41,6 +42,7 @@ function displayChoicesMade (playerChoice, computerChoice) {
   console.clear();
   prompt(`You chose ${playerChoice}, computer chose ${computerChoice}`);
 }
+
 function displayWinner(playerChoice, computerChoice) {
   let playerWon = playerWins(playerChoice, computerChoice);
   if (playerWon) {
@@ -57,6 +59,7 @@ while (true) {
   prompt(`Let's see who will get to 5 wins first!`);
   let playerScore = 0;
   let computerScore = 0;
+
   while (true) {
     prompt('Choose one:' + '\n' + choicesText);
     let playerChoice = readline.question();
