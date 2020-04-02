@@ -68,6 +68,7 @@ while (true) {
     while (!choicesArray.includes(playerChoice)) {
       console.clear();
       prompt("That's not a valid choice");
+      prompt('Choose one:' + '\n' + choicesText);
       playerChoice = readline.question();
       playerChoice = playerChoice.toLowerCase();
     }
